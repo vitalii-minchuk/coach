@@ -1,47 +1,69 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <h3>Friends list</h3>
+    <new-friend @make-friend="createNewFriend"></new-friend>
+    <ul>
+      <friend-contact
+        v-for="friend in friends"
+        :key="friend.id"
+        :friend="friend"
+        @toggle-favorite="handleFavorite"
+      ></friend-contact>
+    </ul>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import FriendContact from "./components/FriendContact.vue";
+import newFriend from "./components/NewFriend.vue";
+export default {
+  components: { "friend-contact": FriendContact, "new-friend": newFriend },
+  data() {
+    return {
+      friends: [
+        {
+          id: 1,
+          name: "Max",
+          age: 33,
+          email: "max@gmail.com",
+          isFavorite: true,
+        },
+        {
+          id: 2,
+          name: "Den",
+          age: 35,
+          email: "den@gmail.com",
+          isFavorite: false,
+        },
+      ],
+    };
+  },
+  methods: {
+    handleFavorite(id) {
+      const friends = this.friends.map((friend) => {
+        if (friend.id === id) {
+          return { ...friend, isFavorite: !friend.isFavorite };
+        }
+        return friend;
+      });
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+      this.friends = friends;
+    },
+    createNewFriend(friend) {
+      const getId = this.friends.sort((a, b) => b.id - a.id);
+      const newId = getId[0].id + 1;
+      const newFriend = { ...friend, id: newId };
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+      this.friends.push(newFriend);
+    },
+  },
+};
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>
