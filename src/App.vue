@@ -1,60 +1,58 @@
 <template>
-  <div>
-    <h3>Friends list</h3>
-    <new-friend @make-friend="createNewFriend"></new-friend>
-    <ul>
-      <friend-contact
-        v-for="friend in friends"
-        :key="friend.id"
-        :friend="friend"
-        @toggle-favorite="handleFavorite"
-      ></friend-contact>
-    </ul>
-  </div>
+  <the-header></the-header>
+  <main class="content">
+    <badge-list></badge-list>
+    <user-info :activeUser="activeUser"></user-info>
+    <course-goals #default="slotProps">
+      <h5>{{ slotProps.item }}</h5>
+      <p>{{ slotProps.dividerLi }}</p>
+    </course-goals>
+    <base-card>
+      <template #top>
+        <component :is="selectedComponent"></component>
+      </template>
+      <template #default>
+        <button class="goal-btn" @click="setVisibleGoals('manage-goals')">
+          manage goals
+        </button>
+        <button class="goal-btn" @click="setVisibleGoals('active-goals')">
+          active goals
+        </button>
+      </template>
+    </base-card>
+  </main>
 </template>
 
 <script>
-import FriendContact from "./components/FriendContact.vue";
-import newFriend from "./components/NewFriend.vue";
+import UserInfo from './components/UserInfo.vue';
+import BadgeList from './components/BadgeList.vue';
+import TheHeader from './components/layout/TheHeader.vue';
+import CourseGoals from './components/CourseGoals.vue';
+import ManageGoals from './components/ManageGoals.vue';
+import ActiveGoals from './components/ActiveGoals.vue';
+
 export default {
-  components: { "friend-contact": FriendContact, "new-friend": newFriend },
+  components: {
+    TheHeader,
+    BadgeList,
+    UserInfo,
+    CourseGoals,
+    ManageGoals,
+    ActiveGoals,
+  },
   data() {
     return {
-      friends: [
-        {
-          id: 1,
-          name: "Max",
-          age: 33,
-          email: "max@gmail.com",
-          isFavorite: true,
-        },
-        {
-          id: 2,
-          name: "Den",
-          age: 35,
-          email: "den@gmail.com",
-          isFavorite: false,
-        },
-      ],
+      selectedComponent: 'active-goals',
+      activeUser: {
+        name: 'Max',
+        description: 'Site owner and admin',
+        role: 'admin',
+      },
     };
   },
   methods: {
-    handleFavorite(id) {
-      const friends = this.friends.map((friend) => {
-        if (friend.id === id) {
-          return { ...friend, isFavorite: !friend.isFavorite };
-        }
-        return friend;
-      });
-
-      this.friends = friends;
-    },
-    createNewFriend(friend) {
-      const getId = this.friends.sort((a, b) => b.id - a.id);
-      const newId = getId[0].id + 1;
-      const newFriend = { ...friend, id: newId };
-
-      this.friends.push(newFriend);
+    setVisibleGoals(component) {
+      this.selectedComponent = component;
     },
   },
 };
@@ -65,5 +63,18 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.goal-btn {
+  padding: 2px 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: 1px solid plum;
+  background-color: transparent;
 }
 </style>
