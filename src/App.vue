@@ -1,58 +1,56 @@
 <template>
   <the-header></the-header>
   <main class="content">
-    <badge-list></badge-list>
-    <user-info :activeUser="activeUser"></user-info>
-    <course-goals #default="slotProps">
-      <h5>{{ slotProps.item }}</h5>
-      <p>{{ slotProps.dividerLi }}</p>
-    </course-goals>
-    <base-card>
-      <template #top>
-        <component :is="selectedComponent"></component>
-      </template>
-      <template #default>
-        <button class="goal-btn" @click="setVisibleGoals('manage-goals')">
-          manage goals
-        </button>
-        <button class="goal-btn" @click="setVisibleGoals('active-goals')">
-          active goals
-        </button>
-      </template>
-    </base-card>
+    <the-resources></the-resources>
+    <the-form></the-form>
   </main>
 </template>
 
 <script>
-import UserInfo from './components/UserInfo.vue';
-import BadgeList from './components/BadgeList.vue';
 import TheHeader from './components/layout/TheHeader.vue';
-import CourseGoals from './components/CourseGoals.vue';
-import ManageGoals from './components/ManageGoals.vue';
-import ActiveGoals from './components/ActiveGoals.vue';
+import TheResources from './components/resources/TheResources.vue';
+import TheForm from './components/forms/TheForm.vue';
 
 export default {
   components: {
     TheHeader,
-    BadgeList,
-    UserInfo,
-    CourseGoals,
-    ManageGoals,
-    ActiveGoals,
+    TheResources,
+    TheForm,
+  },
+  provide() {
+    return {
+      resources: this.storedResources,
+      addResource: this.addResource,
+      removeResource: this.removeResource,
+    };
   },
   data() {
     return {
-      selectedComponent: 'active-goals',
-      activeUser: {
-        name: 'Max',
-        description: 'Site owner and admin',
-        role: 'admin',
-      },
+      storedResources: [
+        {
+          id: 1,
+          title: 'Official Guide',
+          description: 'The official vue.js documentation',
+          link: 'https://vuejs.org/',
+        },
+        {
+          id: 2,
+          title: 'Google',
+          description: 'Ypu have to learn to google',
+          link: 'https://google.com/',
+        },
+      ],
     };
   },
   methods: {
-    setVisibleGoals(component) {
-      this.selectedComponent = component;
+    addResource(newResource) {
+      this.storedResources.push(newResource);
+    },
+    removeResource(id) {
+      const resourceIndex = this.storedResources.findIndex(
+        (resource) => resource.id === id
+      );
+      this.storedResources.splice(resourceIndex, 1);
     },
   },
 };
@@ -64,17 +62,17 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
+li {
+  list-style: none;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   gap: 30px;
-}
-
-.goal-btn {
-  padding: 2px 10px;
-  font-size: 12px;
-  text-transform: uppercase;
-  border: 1px solid plum;
-  background-color: transparent;
+  max-width: 630px;
+  padding: 0 15px;
+  margin: 20px auto;
 }
 </style>

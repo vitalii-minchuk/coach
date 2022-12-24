@@ -1,14 +1,6 @@
 <template>
   <div class="card-wrapper">
-    <div v-if="$slots.top" class="top">
-      <slot name="top"></slot>
-    </div>
-    <div v-if="$slots.default" class="default">
-      <slot name="default"></slot>
-    </div>
-    <div v-if="$slots.bottom" class="bottom">
-      <slot name="bottom"></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 <script>
@@ -18,15 +10,9 @@ export default {};
 .card-wrapper {
   padding: 20px;
   margin: 0 auto;
-  width: 300px;
+  max-width: 500px;
+  border: 1px solid teal;
   border-radius: 8px;
   box-shadow: 3px 3px 7px gray;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.default {
-  display: flex;
-  justify-content: space-between;
 }
 </style>
