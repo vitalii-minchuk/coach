@@ -21,7 +21,7 @@
       <base-btn type="submit">submit</base-btn>
     </form>
   </base-card>
-  <base-dialog v-if="isInputInvalid">
+  <base-dialog :open="isInputInvalid">
     <template #default>
       <p>Inputs can not be empty!!!</p>
     </template>

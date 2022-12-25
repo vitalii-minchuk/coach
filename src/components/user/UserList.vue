@@ -2,7 +2,7 @@
   <base-card>
     <div class="wrapper">
       <h3>Users List</h3>
-      <user-data v-for="user in users" :key="user.id" :user="user"></user-data>
+      <user-data v-for="user in users" :key="user.id" :user="user"> </user-data>
     </div>
   </base-card>
 </template>

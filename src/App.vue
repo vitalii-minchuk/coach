@@ -1,7 +1,14 @@
 <template>
   <the-header></the-header>
   <main class="content">
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
+    <router-view v-slot="{ Component, route }">
+      <transition name="routing" mode="out-in">
+        <div :key="route.name">
+          <component :is="Component"></component>
+        </div>
+      </transition>
+    </router-view>
     <router-view name="footer"></router-view>
   </main>
 </template>
@@ -92,5 +99,20 @@ a {
   max-width: 630px;
   padding: 0 15px;
   margin: 20px auto;
+}
+
+.routing-enter-from,
+.routing-leave-to {
+  opacity: 0;
+}
+
+.routing-enter-active,
+.routing-leave-active {
+  transition: all 0.8s ease;
+}
+
+.routing-enter-to,
+.routing-leave-from {
+  opacity: 1;
 }
 </style>
