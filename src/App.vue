@@ -1,60 +1,71 @@
 <template>
   <the-header></the-header>
   <main class="content">
-    <the-resources></the-resources>
-    <the-form></the-form>
-    <user-list></user-list>
+    <router-view></router-view>
+    <router-view name="footer"></router-view>
   </main>
 </template>
 
 <script>
 import TheHeader from './components/layout/TheHeader.vue';
-import TheResources from './components/resources/TheResources.vue';
-import TheForm from './components/forms/TheForm.vue';
-import UserList from './components/user/UserList.vue';
 
 export default {
   components: {
     TheHeader,
-    TheResources,
-    TheForm,
-    UserList,
-  },
-  provide() {
-    return {
-      resources: this.storedResources,
-      addResource: this.addResource,
-      removeResource: this.removeResource,
-    };
   },
   data() {
     return {
-      storedResources: [
+      users: [
         {
-          id: 1,
-          title: 'Official Guide',
-          description: 'The official vue.js documentation',
-          link: 'https://vuejs.org/',
+          id: 'u1',
+          fullName: 'Max',
+          role: 'Engineer',
         },
         {
-          id: 2,
-          title: 'Google',
-          description: 'Ypu have to learn to google',
-          link: 'https://google.com/',
+          id: 'u2',
+          fullName: 'Den',
+          role: 'Engineer',
+        },
+        {
+          id: 'u3',
+          fullName: 'Net',
+          role: 'Engineer',
+        },
+        {
+          id: 'u4',
+          fullName: 'Mary',
+          role: 'Consultant',
+        },
+        {
+          id: 'u5',
+          fullName: 'Sophy',
+          role: 'Consultant',
+        },
+      ],
+      teams: [
+        {
+          id: 't1',
+          name: 'Frontend Engineers',
+          members: ['u1', 'u2'],
+        },
+        {
+          id: 't2',
+          name: 'Backend Engineers',
+          members: ['u1', 'u2', 'u3'],
+        },
+        {
+          id: 't3',
+          name: 'Client Consulting',
+          members: ['u4', 'u5'],
         },
       ],
     };
   },
-  methods: {
-    addResource(newResource) {
-      this.storedResources.push(newResource);
-    },
-    removeResource(id) {
-      const resourceIndex = this.storedResources.findIndex(
-        (resource) => resource.id === id
-      );
-      this.storedResources.splice(resourceIndex, 1);
-    },
+  provide() {
+    return {
+      teams: this.teams,
+      users: this.users,
+    };
   },
 };
 </script>
@@ -68,6 +79,10 @@ export default {
 
 li {
   list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .content {
