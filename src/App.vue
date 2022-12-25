@@ -3,6 +3,7 @@
   <main class="content">
     <the-resources></the-resources>
     <the-form></the-form>
+    <user-list></user-list>
   </main>
 </template>
 
@@ -10,12 +11,14 @@
 import TheHeader from './components/layout/TheHeader.vue';
 import TheResources from './components/resources/TheResources.vue';
 import TheForm from './components/forms/TheForm.vue';
+import UserList from './components/user/UserList.vue';
 
 export default {
   components: {
     TheHeader,
     TheResources,
     TheForm,
+    UserList,
   },
   provide() {
     return {

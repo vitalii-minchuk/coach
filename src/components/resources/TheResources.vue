@@ -37,7 +37,6 @@ export default {
       this.selectedResource = res;
     },
     switchTab() {
-      console.log('first');
       this.selectedResource = 'resources-list';
     },
   },
@@ -51,4 +50,3 @@ export default {
   },
 };
 </script>
-<style></style>

@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { createUser } from '../../services/user';
 import RatingControl from './RatingControl.vue';
 
 export default {
@@ -136,10 +137,17 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.checkErrors();
-      console.log(this.rating);
+      const newUser = {
+        userName: this.userName,
+        userAge: this.userAge,
+        referrer: this.referrer,
+        interest: this.interest,
+        how: this.how,
+        rating: this.rating,
+      };
+
+      createUser(newUser);
     },
-    checkErrors() {},
   },
   watch: {
     userAge(value) {

@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <h4>Rating:</h4>
     <button
       class="btn"
       :class="{ active: modelValue === 'poor' }"
@@ -54,10 +55,5 @@ export default {
 .active {
   color: blue;
   border-bottom: 1px solid blue;
-}
-
-.wrapper {
-  display: flex;
-  justify-content: space-between;
 }
 </style>
