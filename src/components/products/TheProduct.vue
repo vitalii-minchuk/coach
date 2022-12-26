@@ -17,7 +17,7 @@ export default {
   //     }
   //   },
   // },
-  setup(props, context) {
+  setup(props) {
     const info = computed(() => {
       if (props.name && props.price) {
         return props.name + ' ' + props.price;

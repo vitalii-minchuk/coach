@@ -3,6 +3,7 @@ import HomePage from '../pages/HomePage.vue';
 import TeamsPage from '../pages/TeamsPage.vue';
 import ProductsPage from '../pages/ProductsPage.vue';
 import UsersPage from '../pages/UsersPage.vue';
+import VuexPage from '../pages/VuexPage.vue';
 import SingleTeamPage from '../pages/SingleTeamPage.vue';
 import NotFound from '../pages/NotFound.vue';
 import TeamsFooter from '../components/teams/TeamsFooter.vue';
@@ -32,6 +33,10 @@ const routes = [
   {
     path: '/products',
     component: ProductsPage,
+  },
+  {
+    path: '/vuex',
+    component: VuexPage,
   },
   {
     name: 'team-members',

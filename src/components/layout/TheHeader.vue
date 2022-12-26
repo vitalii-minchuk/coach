@@ -2,11 +2,12 @@
   <header class="header">
     <div class="wrapper">
       <h3><router-link to="/">LOGO</router-link></h3>
-      <nav>
+      <nav class="nav">
         <router-link to="teams">Teams</router-link>
         <router-link to="about">About</router-link>
         <router-link to="products">Products</router-link>
         <router-link to="users">Users</router-link>
+        <router-link to="vuex">Vuex</router-link>
       </nav>
     </div>
   </header>
@@ -23,6 +24,11 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  gap: 5px;
 }
 
 .active-link {
