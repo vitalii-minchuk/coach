@@ -1,78 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../pages/HomePage.vue';
-import TeamsPage from '../pages/TeamsPage.vue';
-import ProductsPage from '../pages/ProductsPage.vue';
-import UsersPage from '../pages/UsersPage.vue';
-import VuexPage from '../pages/VuexPage.vue';
-import SingleTeamPage from '../pages/SingleTeamPage.vue';
-import NotFound from '../pages/NotFound.vue';
-import TeamsFooter from '../components/teams/TeamsFooter.vue';
-import UsersFooter from '../components/user/UserFooter.vue';
-import TheFooter from '../components/layout/TheFooter.vue';
+import NotFoundPage from '../pages/NotFoundPage.vue';
+import CoachesList from '../pages/CoachesList.vue';
+import CoachDetails from '../pages/CoachDetails.vue';
+import CoachRegistration from '../pages/CoachRegistration.vue';
+import RequestsReceived from '../pages/RequestsReceived.vue';
+import ContactCoach from '../pages/ContactCoach.vue';
 
 const routes = [
+  { path: '/', redirect: '/coaches' },
+  { path: '/coaches', component: CoachesList },
   {
-    path: '/',
-    components: { default: HomePage, footer: TheFooter },
+    path: '/coaches/:id',
+    component: CoachDetails,
+    children: [{ path: '/contact', component: ContactCoach }],
   },
-  {
-    path: '/teams',
-    components: { default: TeamsPage, footer: TeamsFooter },
-    // children: [
-    //   {
-    //     path: ':teamId',
-    //     component: SingleTeamPage,
-    //     props: true,
-    //   },
-    // ],
-  },
-  {
-    path: '/about',
-    redirect: '/teams',
-  },
-  {
-    path: '/products',
-    component: ProductsPage,
-  },
-  {
-    path: '/vuex',
-    component: VuexPage,
-  },
-  {
-    name: 'team-members',
-    path: '/teams/:teamId',
-    components: { default: SingleTeamPage, footer: TeamsFooter },
-    props: true,
-  },
-  {
-    path: '/users',
-    components: { default: UsersPage, footer: UsersFooter },
-    beforeEnter(to, from, next) {
-      console.log('before users enter');
-      next();
-    },
-  },
-  {
-    path: '/:pathMatch(.*)',
-    component: NotFound,
-  },
+  { path: '/register', component: CoachRegistration },
+  { path: '/requests', component: RequestsReceived },
+  { path: '/:pathMatch(.*)', component: NotFoundPage },
 ];
 
 const router = createRouter({
-  routes,
   history: createWebHistory(),
-  linkActiveClass: 'active-link',
-  scrollBehavior(_, _2, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
-    }
-    return { left: 0, top: 0 };
-  },
+  routes,
+  linkActiveClass: 'router-active-link',
 });
-
-// router.beforeEach((to, from, next) => {
-//   console.log('global before each');
-//   next();
-// });
 
 export default router;

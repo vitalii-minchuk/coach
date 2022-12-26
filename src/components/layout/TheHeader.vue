@@ -1,37 +1,79 @@
 <template>
-  <header class="header">
-    <div class="wrapper">
-      <h3><router-link to="/">LOGO</router-link></h3>
-      <nav class="nav">
-        <router-link to="teams">Teams</router-link>
-        <router-link to="about">About</router-link>
-        <router-link to="products">Products</router-link>
-        <router-link to="users">Users</router-link>
-        <router-link to="vuex">Vuex</router-link>
+  <header>
+    <div>
+      <h3>
+        <router-link to="/">COACH</router-link>
+      </h3>
+      <nav>
+        <router-link to="/coaches">All coaches</router-link>
+        <router-link to="/requests">Requests</router-link>
       </nav>
     </div>
   </header>
 </template>
-
+<script>
+export default {};
+</script>
 <style scoped>
-.header {
-  text-align: center;
-  height: 40px;
-  margin-bottom: 30px;
-  background-color: rgba(0, 0, 0, 0.3);
-  line-height: 40px;
-}
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.nav {
-  display: flex;
-  gap: 5px;
-}
-
-.active-link {
+.router-active-link {
   color: blueviolet;
 }
+/* header {
+  width: 100%;
+  height: 5rem;
+  background-color: #3d008d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header a {
+  text-decoration: none;
+  color: #f391e3;
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+}
+
+a:active,
+a:hover,
+a.router-link-active {
+  border: 1px solid #f391e3;
+}
+
+h3 {
+  margin: 0;
+}
+
+h3 a {
+  color: white;
+  margin: 0;
+}
+
+h1 a:hover,
+h1 a:active,
+h1 a.router-link-active {
+  border-color: transparent;
+}
+
+header nav {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+li {
+  margin: 0 0.5rem;
+} */
 </style>
