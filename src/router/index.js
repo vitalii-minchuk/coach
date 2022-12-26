@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import TeamsPage from '../pages/TeamsPage.vue';
+import ProductsPage from '../pages/ProductsPage.vue';
 import UsersPage from '../pages/UsersPage.vue';
 import SingleTeamPage from '../pages/SingleTeamPage.vue';
 import NotFound from '../pages/NotFound.vue';
@@ -27,6 +28,10 @@ const routes = [
   {
     path: '/about',
     redirect: '/teams',
+  },
+  {
+    path: '/products',
+    component: ProductsPage,
   },
   {
     name: 'team-members',

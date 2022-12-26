@@ -3,9 +3,10 @@
     <div class="wrapper">
       <h3><router-link to="/">LOGO</router-link></h3>
       <nav>
-        <router-link to="/teams">Teams</router-link>
-        <router-link to="/about">About</router-link>
-        <router-link to="/users">Users</router-link>
+        <router-link to="teams">Teams</router-link>
+        <router-link to="about">About</router-link>
+        <router-link to="products">Products</router-link>
+        <router-link to="users">Users</router-link>
       </nav>
     </div>
   </header>
