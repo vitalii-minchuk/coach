@@ -1,5 +1,5 @@
 <template>
-  <section>contact</section>
+  <section>contact sdjf;lkjsadf lksjdfklasjdfksaj f;laskjd sal;j</section>
 </template>
 <script>
 export default {};

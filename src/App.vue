@@ -1,6 +1,6 @@
 <template>
   <the-header></the-header>
-  <main>
+  <main class="main">
     <router-view v-slot="{ Component, route }">
       <transition name="fade" mode="out-in">
         <div :key="route">
@@ -34,6 +34,20 @@ html {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+.main {
+  margin: 40px 0;
+}
+
+.container {
+  max-width: 1230px;
+  padding: 0 15px;
+  margin: 0 auto;
 }
 
 .fade-enter-from,

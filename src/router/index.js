@@ -12,11 +12,12 @@ const routes = [
   {
     path: '/coaches/:id',
     component: CoachDetails,
-    children: [{ path: '/contact', component: ContactCoach }],
+    props: true,
+    children: [{ path: 'contact', component: ContactCoach }],
   },
   { path: '/register', component: CoachRegistration },
   { path: '/requests', component: RequestsReceived },
-  { path: '/:pathMatch(.*)', component: NotFoundPage },
+  { path: '/:notFound(.*)', component: NotFoundPage },
 ];
 
 const router = createRouter({
