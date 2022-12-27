@@ -7,11 +7,12 @@
       <base-frame>
         <div>
           <base-btn>refresh</base-btn>
-          <router-link v-if="!isCoach" to="/register"
+          <router-link v-if="!isCoach && !isLoading" to="/register"
             >Register as coach</router-link
           >
         </div>
-        <ul class="list-box" v-if="hasCoaches">
+        <base-spinner v-if="isLoading"></base-spinner>
+        <ul class="list-box" v-else-if="hasCoaches && !isLoading">
           <coach-item
             v-for="coach in filteredCoaches"
             :key="coach.id"
@@ -21,6 +22,13 @@
         <h3 v-else>No coaches found</h3>
       </base-frame>
     </section>
+    <base-dialog
+      :show="!!fetchError"
+      @close="closeFetchErrorDialog"
+      :title="'Fetching Error'"
+    >
+      <p>{{ fetchError }}</p>
+    </base-dialog>
   </div>
 </template>
 <script>
@@ -43,7 +51,12 @@ export default {
     CoachFilter,
   },
   computed: {
-    ...mapGetters('coaches', ['isCoach', 'hasCoaches']),
+    ...mapGetters('coaches', [
+      'isCoach',
+      'hasCoaches',
+      'isLoading',
+      'fetchError',
+    ]),
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
       const filteredCoaches = coaches.filter((coach) => {
@@ -65,6 +78,18 @@ export default {
     setFilter(filters) {
       this.activeFilters = filters;
     },
+    closeFetchErrorDialog() {
+      this.$store.dispatch({
+        type: 'coaches/handleFetchErrors',
+        value: '',
+      });
+    },
+    fetchCoaches() {
+      this.$store.dispatch('coaches/loadCoaches');
+    },
+  },
+  created() {
+    this.fetchCoaches();
   },
 };
 </script>

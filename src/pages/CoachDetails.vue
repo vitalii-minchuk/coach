@@ -13,7 +13,7 @@
     <section>
       <base-card
         ><template #top><h4>Interested? Reach out now?</h4></template>
-        <base-btn link :to="contactLink">contact</base-btn>
+        <base-btn v-if="isContactPage" link :to="contactLink">contact</base-btn>
         <router-view></router-view>
       </base-card>
     </section>
@@ -62,6 +62,9 @@ export default {
     },
     description() {
       return this.selectedCoach.description;
+    },
+    isContactPage() {
+      return !this.$route.path.includes('contact');
     },
   },
 };

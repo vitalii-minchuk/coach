@@ -222,7 +222,6 @@ export default {
       }
     },
     'areas.val': function (value) {
-      console.log(value);
       if (!value) {
         this.setErrors('areas', 'Please, choose at least one expertise');
       } else {

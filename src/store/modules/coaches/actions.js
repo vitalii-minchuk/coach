@@ -1,8 +1,77 @@
 export default {
-  createNewCoach(context, payload) {
-    context.commit('registerCoach', {
-      ...payload,
-      id: context.rootGetters.coachId,
-    });
+  changeIsLoading(context, payload) {
+    context.commit('setLoading', payload.value);
+  },
+  handleFetchErrors(context, payload) {
+    context.commit('setFetchError', payload.value);
+  },
+  async createNewCoach(context, payload) {
+    const userId = context.rootGetters.coachId;
+    try {
+      context.dispatch('changeIsLoading', { value: true });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_DATABASE_URL}/coaches/${userId}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = data.message || 'Something went wrong';
+        throw new Error(error);
+      }
+
+      context.commit('registerCoach', {
+        ...payload,
+        id: userId,
+      });
+    } catch (error) {
+      console.log(error.message);
+      context.dispatch('handleFetchErrors', { value: error.message });
+    } finally {
+      context.dispatch('changeIsLoading', { value: false });
+    }
+  },
+  async loadCoaches(context) {
+    if (!context.getters.shouldTimeStampUpdate) {
+      return;
+    }
+
+    try {
+      context.dispatch('changeIsLoading', { value: true });
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_DATABASE_URL}/coaches.json`
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = data.message || 'Something went wrong';
+        throw new Error(error);
+      }
+      const coaches = [];
+      console.log(data);
+      for (const key in data) {
+        const coach = {
+          id: key,
+          firstName: data[key].firstName,
+          lastName: data[key].lastName,
+          areas: data[key].areas,
+          description: data[key].description,
+          hourlyRate: data[key].hourlyRate,
+        };
+        coaches.push(coach);
+      }
+      context.commit('setCoaches', coaches);
+      context.commit('setFetchTimeStamp');
+    } catch (error) {
+      console.log(error.message);
+      context.dispatch('handleFetchErrors', { value: error.message });
+    } finally {
+      context.dispatch('changeIsLoading', { value: false });
+    }
   },
 };

@@ -11,4 +11,21 @@ export default {
 
     return coaches.some((coach) => coach.id === coachId);
   },
+  isLoading(state) {
+    return state.isLoading;
+  },
+  fetchError(state) {
+    return state.fetchError;
+  },
+  shouldTimeStampUpdate(state) {
+    const lastFetch = state.lastFetch;
+
+    if (!lastFetch) {
+      return true;
+    }
+
+    const currentTimeStamp = new Date().getTime();
+
+    return (currentTimeStamp - lastFetch) / 1000 > 60;
+  },
 };

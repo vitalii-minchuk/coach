@@ -2,18 +2,14 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import store from './store';
 import router from './router';
-import BaseCard from './components/ui/BaseCard.vue';
-import BaseBtn from './components/ui/BaseBtn.vue';
-import BaseBadge from './components/ui/BaseBadge.vue';
-import BaseFrame from './components/ui/BaseFrame.vue';
-
+import baseUIComponents from './components/ui';
 const app = createApp(App);
 
 app.use(router);
 app.use(store);
-app.component('base-card', BaseCard);
-app.component('base-btn', BaseBtn);
-app.component('base-badge', BaseBadge);
-app.component('base-frame', BaseFrame);
+
+baseUIComponents.forEach((el) => {
+  app.component(el.name, el.component);
+});
 
 app.mount('#app');
