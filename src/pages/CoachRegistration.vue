@@ -1,7 +1,23 @@
 <template>
-  <section>register</section>
+  <div class="container">
+    <section>
+      <base-frame>
+        <coach-form @save-data="saveData"></coach-form>
+      </base-frame>
+    </section>
+  </div>
 </template>
 <script>
-export default {};
+import CoachForm from '../components/coach/CoachForm.vue';
+
+export default {
+  components: { CoachForm },
+  methods: {
+    saveData(data) {
+      this.$store.dispatch('coaches/createNewCoach', data);
+      this.$router.replace('/coaches');
+    },
+  },
+};
 </script>
 <style></style>

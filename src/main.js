@@ -5,6 +5,7 @@ import router from './router';
 import BaseCard from './components/ui/BaseCard.vue';
 import BaseBtn from './components/ui/BaseBtn.vue';
 import BaseBadge from './components/ui/BaseBadge.vue';
+import BaseFrame from './components/ui/BaseFrame.vue';
 
 const app = createApp(App);
 
@@ -13,5 +14,6 @@ app.use(store);
 app.component('base-card', BaseCard);
 app.component('base-btn', BaseBtn);
 app.component('base-badge', BaseBadge);
+app.component('base-frame', BaseFrame);
 
 app.mount('#app');

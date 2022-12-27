@@ -3,24 +3,30 @@
     <section>
       <coach-filter @change-filter="setFilter"></coach-filter>
     </section>
-    <section>
-      <div>
-        <router-link to="/register">Register as coach</router-link>
-      </div>
-      <ul class="list-box" v-if="hasCoaches">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :coach="coach"
-        ></coach-item>
-      </ul>
-      <h3 v-else>No coaches found</h3>
+    <section class="list-section">
+      <base-frame>
+        <div>
+          <base-btn>refresh</base-btn>
+          <router-link v-if="!isCoach" to="/register"
+            >Register as coach</router-link
+          >
+        </div>
+        <ul class="list-box" v-if="hasCoaches">
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :coach="coach"
+          ></coach-item>
+        </ul>
+        <h3 v-else>No coaches found</h3>
+      </base-frame>
     </section>
   </div>
 </template>
 <script>
 import CoachItem from '../components/coach/CoachItem.vue';
 import CoachFilter from '../components/coach/CoachFilter.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -37,6 +43,7 @@ export default {
     CoachFilter,
   },
   computed: {
+    ...mapGetters('coaches', ['isCoach', 'hasCoaches']),
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
       const filteredCoaches = coaches.filter((coach) => {
@@ -53,9 +60,6 @@ export default {
       });
       return filteredCoaches;
     },
-    hasCoaches() {
-      return this.$store.getters['coaches/hasCoaches'];
-    },
   },
   methods: {
     setFilter(filters) {
@@ -67,5 +71,9 @@ export default {
 <style scoped>
 .list-box {
   margin: 40px 0;
+}
+
+.list-section {
+  margin: 30px 0;
 }
 </style>
