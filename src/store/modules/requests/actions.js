@@ -36,7 +36,7 @@ export default {
     }
   },
   async fetchRequests(context) {
-    const userId = context.rootGetters.coachId;
+    const userId = context.rootGetters.userId;
     try {
       context.dispatch('changeIsLoading', { value: true });
 
