@@ -12,7 +12,6 @@ export default {
     state.lastFetch = new Date().getTime();
   },
   setCoaches(state, payload) {
-    console.log(state);
     state.coaches = payload;
   },
 };

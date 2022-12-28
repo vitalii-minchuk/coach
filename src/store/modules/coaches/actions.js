@@ -6,11 +6,16 @@ export default {
     context.commit('setFetchError', payload.value);
   },
   async createNewCoach(context, payload) {
-    const userId = context.rootGetters.coachId;
+    const userId = context.rootGetters.userId;
     try {
       context.dispatch('changeIsLoading', { value: true });
+
+      const token = context.rootGetters.token;
+
       const response = await fetch(
-        `${import.meta.env.VITE_APP_DATABASE_URL}/coaches/${userId}.json`,
+        `${
+          import.meta.env.VITE_APP_DATABASE_URL
+        }/coaches/${userId}.json?auth=${token}`,
         {
           method: 'PUT',
           body: JSON.stringify(payload),
@@ -35,15 +40,18 @@ export default {
       context.dispatch('changeIsLoading', { value: false });
     }
   },
-  async loadCoaches(context) {
-    if (!context.getters.shouldTimeStampUpdate) {
+  async loadCoaches(context, payload) {
+    if (!payload.refresh && !context.getters.shouldTimeStampUpdate) {
       return;
     }
 
     try {
       context.dispatch('changeIsLoading', { value: true });
+
+      const token = context.rootGetters.token;
+
       const response = await fetch(
-        `${import.meta.env.VITE_APP_DATABASE_URL}/coaches.json`
+        `${import.meta.env.VITE_APP_DATABASE_URL}/coaches.json?auth=${token}`
       );
 
       const data = await response.json();
@@ -53,7 +61,7 @@ export default {
         throw new Error(error);
       }
       const coaches = [];
-      console.log(data);
+
       for (const key in data) {
         const coach = {
           id: key,

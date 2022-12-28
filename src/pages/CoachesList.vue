@@ -6,9 +6,13 @@
     <section class="list-section">
       <base-frame>
         <div>
-          <base-btn>refresh</base-btn>
-          <router-link v-if="!isCoach && !isLoading" to="/register"
-            >Register as coach</router-link
+          <base-btn @click="fetchCoaches(true)">refresh</base-btn>
+          <base-btn v-if="!isAuth" :to="'/auth'" link>login</base-btn>
+          <base-btn
+            v-if="!this.isCoach && !this.isLoading && this.isAuth"
+            link
+            :to="'/register'"
+            >Register as coach</base-btn
           >
         </div>
         <base-spinner v-if="isLoading"></base-spinner>
@@ -19,7 +23,7 @@
             :coach="coach"
           ></coach-item>
         </ul>
-        <h3 v-else>No coaches found</h3>
+        <h3 class="not-found" v-else>No coaches found</h3>
       </base-frame>
     </section>
     <base-dialog
@@ -57,6 +61,9 @@ export default {
       'isLoading',
       'fetchError',
     ]),
+    isAuth() {
+      return this.$store.getters.isAuth;
+    },
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
       const filteredCoaches = coaches.filter((coach) => {
@@ -84,8 +91,8 @@ export default {
         value: '',
       });
     },
-    fetchCoaches() {
-      this.$store.dispatch('coaches/loadCoaches');
+    fetchCoaches(refresh = false) {
+      this.$store.dispatch('coaches/loadCoaches', { refresh });
     },
   },
   created() {
@@ -100,5 +107,10 @@ export default {
 
 .list-section {
   margin: 30px 0;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 40px;
 }
 </style>

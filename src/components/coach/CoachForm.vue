@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent="handelSubmit">
+  <form class="form" @submit.prevent="handelSubmit" autocomplete="off">
     <div
       class="form-control"
       :class="{ invalid: !!firstName.error && firstName.touched }"

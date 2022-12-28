@@ -6,15 +6,18 @@ export default {
     context.commit('setFetchError', payload.value);
   },
   async contactCoach(context, payload) {
-    const newRequest = {
-      userEmail: payload.userEmail,
-      message: payload.message,
-    };
     try {
+      const newRequest = {
+        userEmail: payload.userEmail,
+        message: payload.message,
+      };
+
+      const token = context.rootGetters.token;
+
       const response = await fetch(
         `${import.meta.env.VITE_APP_DATABASE_URL}/requests/${
           payload.coachId
-        }.json`,
+        }.json?auth=${token}`,
         {
           method: 'POST',
           body: JSON.stringify(newRequest),
@@ -36,8 +39,13 @@ export default {
     const userId = context.rootGetters.coachId;
     try {
       context.dispatch('changeIsLoading', { value: true });
+
+      const token = context.rootGetters.token;
+
       const response = await fetch(
-        `${import.meta.env.VITE_APP_DATABASE_URL}/requests/${userId}.json`
+        `${
+          import.meta.env.VITE_APP_DATABASE_URL
+        }/requests/${userId}.json?auth=${token}`
       );
 
       const data = await response.json();
@@ -56,7 +64,7 @@ export default {
         };
         requests.push(request);
       }
-      console.log(requests);
+
       context.commit('addRequests', requests);
     } catch (error) {
       console.log(error.message);

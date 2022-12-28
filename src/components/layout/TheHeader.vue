@@ -7,14 +7,32 @@
         </h3>
         <nav class="nav">
           <router-link to="/coaches">All coaches</router-link>
-          <router-link to="/requests">Requests</router-link>
+          <router-link v-if="isAuth" to="/requests">Requests</router-link>
+          <router-link v-else to="/auth">Login</router-link>
+          <base-btn mode="delete-btn" v-if="isAuth" @click="logout"
+            >Logout</base-btn
+          >
         </nav>
       </div>
     </div>
   </header>
 </template>
 <script>
-export default {};
+export default {
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch({
+        type: 'logout',
+      });
+      this.$router.replace('/coaches');
+    },
+  },
+};
 </script>
 <style scoped>
 .header {
